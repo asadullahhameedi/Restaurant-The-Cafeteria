@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Cafeteria - Premium dining experience in Kabul. Modern cuisine, elegant ambiance, exceptional service. Reserve your table today.">
+  <title>The Cafeteria | Fine Dining Restaurant</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    /* ========================================
+       THE CAFETERIA - PREMIUM RESTAURANT UI
+       Developed by Asadullah Hameedi
+       ======================================== */
+    :root {
+      /* Luxury Color Palette */
+      --gold: #c9a227;
+      --gold-light: #e0b93b;
+      --gold-dark: #8b7500;
+      --gold-glow: rgba(201, 162, 39, 0.4);
+      
+      --bg: #0a0a0c;
+      --bg-surface: rgba(255,255,255,0.04);
+      --bg-glass: rgba(10,10,12,0.85);
+      --bg-glass-hover: rgba(201, 162, 39, 0.08);
+      
+      --text: #f8f8f8;
+      --text-muted: #a8a8a8;
+      --text-gold: var(--gold);
+      
+      --border: rgba(255,255,255,0.08);
+      --border-gold: rgba(201, 162, 39, 0.3);
+      
+      --shadow: 0 8px 32px rgba(0,0,0,0.5);
+      --shadow-gold: 0 0 40px rgba(201, 162, 39, 0.25);
+      --shadow-hover: 0 16px 48px rgba(0,0,0,0.6), var(--shadow-gold);
+      
+      --radius: 20px;
+      --radius-circle: 50%;
+      --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      
+      --font-heading: 'Playfair Display', serif;
+      --font-body: 'Inter', sans-serif;
+      
+      --max-w: 1280px;
+      --pad: clamp(1rem, 4vw, 3rem);
+      --nav-h: 80px;
+    }
+
+    [data-theme="light"] {
+      --bg: #faf9f6;
+      --bg-surface: rgba(255,255,255,0.75);
+      --bg-glass: rgba(250,249,246,0.9);
+      --bg-glass-hover: rgba(201, 162, 39, 0.06);
+      --text: #1a1a1a;
+      --text-muted: #555;
+      --border: rgba(0,0,0,0.08);
+      --shadow: 0 8px 32px rgba(0,0,0,0.12);
+      --shadow-gold: 0 0 40px rgba(201, 162, 39, 0.15);
+    }
+
+    /* ===== Reset & Base ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      transition: background 0.5s var(--ease), color 0.5s var(--ease);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Scroll Progress Indicator */
+    #scrollProgress {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      z-index: 9999; width: 0; transition: width 0.15s var(--ease);
+      box-shadow: 0 0 12px var(--gold-glow);
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 600; line-height: 1.2; }
+    h1 { font-size: clamp(2.8rem, 7vw, 5.5rem); letter-spacing: -0.02em; }
+    h2 { font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 1.5rem; }
+    h3 { font-size: clamp(1.4rem, 3vw, 1.8rem); }
+    p { color: var(--text-muted); }
+    .text-center { text-align: center; }
+    .text-gold { color: var(--gold); }
+    .text-gradient {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-line {
+      width: 70px; height: 3px; background: var(--gold);
+      margin: 0.8rem auto 2.5rem; border-radius: 2px;
+      box-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    /* Layout */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--pad); }
+    section { padding: clamp(4rem, 9vh, 8rem) 0; position: relative; }
+    .grid { display: grid; gap: 2.5rem; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+
+    /* ===== Buttons ===== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      padding: 0.9rem 2.2rem; background: var(--gold); color: #0a0a0c;
+      font-weight: 600; border-radius: 50px; text-decoration: none;
+      border: 2px solid var(--gold); cursor: pointer; transition: all 0.35s var(--ease);
+      font-family: var(--font-body); position: relative; overflow: hidden;
+      box-shadow: 0 4px 20px var(--gold-glow);
+    }
+    .btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: translateX(-100%); transition: transform 0.6s;
+    }
+    .btn:hover::before { transform: translateX(100%); }
+    .btn:hover {
+      transform: translateY(-4px) scale(1.03);
+      box-shadow: var(--shadow-hover);
+      background: var(--gold-light);
+    }
+    .btn:active { transform: translateY(-1px); }
+    
+    .btn-outline {
+      background: transparent; color: var(--gold);
+      border-color: var(--gold);
+    }
+    .btn-outline:hover {
+      background: var(--gold); color: #0a0a0c;
+    }
+    
+    .btn-lg { padding: 1.1rem 2.8rem; font-size: 1.05rem; }
+    .btn-sm { padding: 0.6rem 1.4rem; font-size: 0.9rem; }
+
+    /* ===== Navbar & Logo ===== */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 1.2rem var(--pad); display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.45s var(--ease);
+    }
+    .navbar.scrolled {
+      background: var(--bg-glass); backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      box-shadow: var(--shadow); padding: 0.7rem var(--pad);
+      border-bottom: 1px solid var(--border);
+    }
+    
+    /* Circular AH Logo - Luxury Style */
+    .logo {
+      display: flex; align-items: center; gap: 0.6rem; text-decoration: none;
+      padding: 0.3rem 0.8rem; border-radius: var(--radius-circle);
+      transition: all 0.3s var(--ease);
+    }
+    .logo:hover { transform: scale(1.05); }
+    .logo-circle {
+      width: 48px; height: 48px; border-radius: var(--radius-circle);
+      background: #000; border: 2.5px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 25px var(--gold-glow), inset 0 0 15px rgba(201,162,39,0.2);
+      position: relative; overflow: hidden;
+    }
+    .logo-circle::before {
+      content: ''; position: absolute; inset: -2px;
+      background: conic-gradient(from 0deg, transparent, var(--gold), transparent);
+      animation: rotate 3s linear infinite; opacity: 0.6;
+    }
+    @keyframes rotate { to { transform: rotate(360deg); } }
+    .logo-circle span {
+      font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700;
+      color: var(--gold); z-index: 1; letter-spacing: -1px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    }
+    .logo-text {
+      font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700;
+      color: var(--text);
+    }
+    .logo-text span { color: var(--gold); }
+
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; }
+    .nav-link {
+      color: var(--text); text-decoration: none; font-weight: 500;
+      position: relative; padding: 0.5rem 0; transition: color 0.3s;
+    }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--gold); transition: width 0.35s var(--ease);
+      border-radius: 2px;
+    }
+    .nav-link:hover { color: var(--gold); }
+    .nav-link:hover::after { width: 100%; }
+    
+    .nav-actions { display: flex; gap: 0.9rem; align-items: center; }
+    
+    .theme-toggle {
+      width: 42px; height: 42px; border-radius: var(--radius-circle);
+      background: var(--bg-surface); border: 1px solid var(--border);
+      color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.35s var(--ease); position: relative; overflow: hidden;
+    }
+    .theme-toggle::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(201,162,39,0.15), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .theme-toggle:hover {
+      border-color: var(--gold); transform: rotate(12deg) scale(1.08);
+      box-shadow: 0 0 20px var(--gold-glow);
+    }
+    .theme-toggle:hover::before { opacity: 1; }
+    
+    .hamburger {
+      display: none; background: none; border: none; color: var(--text);
+      font-size: 1.6rem; cursor: pointer; padding: 0.5rem;
+      transition: transform 0.3s;
+    }
+    .hamburger:hover { transform: scale(1.15); color: var(--gold); }
+
+    /* ===== Hero Section ===== */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: 
+        linear-gradient(135deg, rgba(10,10,12,0.85), rgba(10,10,12,0.95)),
+        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=80') center/cover fixed;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,162,39,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-content {
+      max-width: 900px; padding: 0 var(--pad); position: relative; z-index: 2;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 1.5rem; background: rgba(201, 162, 39, 0.12);
+      border: 1px solid var(--gold); border-radius: 50px;
+      color: var(--gold); font-size: 0.85rem; letter-spacing: 2.5px;
+      margin-bottom: 1.8rem; text-transform: uppercase; font-weight: 600;
+      animation: fadeInUp 0.8s var(--ease) both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero h1 {
+      margin-bottom: 1.2rem; color: #fff; line-height: 1.1;
+      animation: fadeInUp 0.8s var(--ease) 0.15s both;
+    }
+    .hero p {
+      color: #e8e8e8; font-size: 1.15rem; margin-bottom: 2.5rem;
+      max-width: 650px; margin-left: auto; margin-right: auto;
+      animation: fadeInUp 0.8s var(--ease) 0.3s both;
+    }
+    .hero-actions {
+      display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap;
+      animation: fadeInUp 0.8s var(--ease) 0.45s both;
+    }
+    .scroll-down {
+      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+      animation: bounce 2.2s infinite ease-in-out; color: var(--gold);
+      font-size: 1.6rem; cursor: pointer; transition: transform 0.3s;
+      z-index: 2;
+    }
+    .scroll-down:hover { transform: translateX(-50%) scale(1.2); }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(12px); }
+    }
+
+    /* ===== Reveal Animations ===== */
+    .reveal {
+      opacity: 0; transform: translateY(50px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0; transform: translateX(-50px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+    .reveal-left.active { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0; transform: translateX(50px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+    .reveal-right.active { opacity: 1; transform: translateX(0); }
+    .reveal-scale {
+      opacity: 0; transform: scale(0.95);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+    .reveal-scale.active { opacity: 1; transform: scale(1); }
+
+    /* ===== Stats Section ===== */
+    .stats {
+      background: var(--bg-surface); padding: 3.5rem 0;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .stat-item { text-align: center; padding: 1rem; }
+    .stat-number {
+      font-size: 2.8rem; font-weight: 700; color: var(--gold);
+      display: block; margin-bottom: 0.4rem; line-height: 1;
+      text-shadow: 0 0 25px var(--gold-glow);
+    }
+    .stat-label {
+      color: var(--text-muted); font-size: 0.88rem;
+      text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500;
+    }
+
+    /* ===== About Section ===== */
+    .about-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 4rem; align-items: center; }
+    .about-img {
+      border-radius: var(--radius); overflow: hidden; position: relative;
+      box-shadow: var(--shadow); transition: all 0.5s var(--ease);
+    }
+    .about-img:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); }
+    .about-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s var(--ease);
+    }
+    .about-img:hover img { transform: scale(1.08); }
+    .about-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.4));
+      pointer-events: none;
+    }
+    .about-content h3 { font-size: 2.1rem; margin-bottom: 1.2rem; }
+    .about-content p { margin-bottom: 1.5rem; }
+    .chef-card {
+      display: flex; align-items: center; gap: 1.2rem;
+      padding: 1.2rem; background: var(--bg-surface);
+      border-radius: var(--radius); border: 1px solid var(--border);
+      transition: all 0.35s var(--ease);
+    }
+    .chef-card:hover {
+      border-color: var(--gold); transform: translateX(8px);
+      box-shadow: var(--shadow-gold);
+    }
+    .chef-img {
+      width: 75px; height: 75px; border-radius: var(--radius-circle);
+      object-fit: cover; border: 3px solid var(--gold);
+      box-shadow: 0 0 20px var(--gold-glow);
+    }
+    .chef-info h4 { font-size: 1.1rem; margin-bottom: 0.2rem; }
+    .chef-info p { font-size: 0.85rem; color: var(--gold); font-weight: 500; }
+
+    /* ===== Menu Section ===== */
+    .menu-filters {
+      display: flex; justify-content: center; gap: 0.7rem;
+      margin-bottom: 3.5rem; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 0.7rem 1.8rem; background: var(--bg-surface);
+      border: 1px solid var(--border); border-radius: 50px;
+      color: var(--text-muted); cursor: pointer; transition: all 0.35s var(--ease);
+      font-weight: 500; position: relative; overflow: hidden;
+    }
+    .filter-btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--gold); opacity: 0; transition: opacity 0.3s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--gold); color: #0a0a0c; border-color: var(--gold);
+      box-shadow: 0 0 25px var(--gold-glow);
+    }
+    .filter-btn:hover::before, .filter-btn.active::before { opacity: 1; }
+    
+    .menu-card {
+      background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden;
+      transition: all 0.45s var(--ease); cursor: pointer;
+      position: relative;
+    }
+    .menu-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(201,162,39,0.06), transparent);
+      opacity: 0; transition: opacity 0.4s; pointer-events: none;
+    }
+    .menu-card:hover {
+      transform: translateY(-10px); box-shadow: var(--shadow-hover);
+      border-color: var(--gold);
+    }
+    .menu-card:hover::before { opacity: 1; }
+    
+    .menu-img {
+      height: 240px; background: #1a1a1c; overflow: hidden; position: relative;
+    }
+    .menu-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.6));
+      opacity: 0; transition: opacity 0.4s; pointer-events: none;
+    }
+    .menu-card:hover .menu-img::after { opacity: 1; }
+    .menu-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.7s var(--ease);
+    }
+    .menu-card:hover .menu-img img { transform: scale(1.12); }
+    
+    .menu-info { padding: 1.8rem; }
+    .menu-header {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 0.9rem; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .menu-title { font-size: 1.35rem; margin: 0; }
+    .menu-price {
+      color: var(--gold); font-weight: 700; font-size: 1.3rem;
+      text-shadow: 0 0 15px var(--gold-glow);
+    }
+    .menu-desc { font-size: 0.92rem; margin-bottom: 1.2rem; min-height: 48px; }
+    .menu-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tag {
+      font-size: 0.75rem; padding: 0.25rem 0.8rem;
+      background: rgba(201, 162, 39, 0.12); color: var(--gold);
+      border-radius: 20px; font-weight: 500; border: 1px solid var(--border-gold);
+      transition: all 0.3s;
+    }
+    .tag:hover {
+      background: var(--gold); color: #0a0a0c;
+      transform: translateY(-2px); box-shadow: 0 4px 15px var(--gold-glow);
+    }
+
+    /* ===== Gallery Section ===== */
+    .gallery-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+    .gallery-item {
+      height: 280px; border-radius: var(--radius); overflow: hidden;
+      cursor: pointer; position: relative; transition: all 0.45s var(--ease);
+      border: 2px solid transparent;
+    }
+    .gallery-item:hover {
+      border-color: var(--gold); transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s var(--ease);
+    }
+    .gallery-item:hover img { transform: scale(1.15); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 20%, rgba(0,0,0,0.75));
+      display: flex; align-items: flex-end; justify-content: center;
+      padding: 1.5rem; opacity: 0; transition: opacity 0.4s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay i {
+      font-size: 1.8rem; color: #fff; background: var(--gold);
+      width: 50px; height: 50px; border-radius: var(--radius-circle);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 25px var(--gold-glow);
+      transition: transform 0.3s;
+    }
+    .gallery-overlay i:hover { transform: scale(1.15) rotate(10deg); }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+      z-index: 9999; display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: all 0.4s var(--ease);
+      padding: 2rem;
+    }
+    .lightbox.active { opacity: 1; visibility: visible; }
+    .lightbox img {
+      max-width: 95%; max-height: 85vh; border-radius: 16px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.7), 0 0 60px var(--gold-glow);
+      border: 3px solid var(--gold);
+      animation: zoomIn 0.4s var(--ease);
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .lightbox-close {
+      position: absolute; top: 2rem; right: 2rem;
+      background: var(--gold); color: #0a0a0c; width: 48px; height: 48px;
+      border-radius: var(--radius-circle); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border: none; font-size: 1.4rem;
+      transition: all 0.35s var(--ease); box-shadow: 0 0 25px var(--gold-glow);
+    }
+    .lightbox-close:hover {
+      transform: rotate(90deg) scale(1.15);
+      background: var(--gold-light);
+    }
+
+    /* ===== Testimonials ===== */
+    .testimonial-slider {
+      position: relative; max-width: 850px; margin: 0 auto;
+      overflow: hidden; padding: 1rem 0;
+    }
+    .testimonial-track {
+      display: flex; transition: transform 0.6s var(--ease);
+    }
+    .testimonial-card {
+      min-width: 100%; padding: 2.5rem;
+      background: var(--bg-surface); border-radius: var(--radius);
+      text-align: center; border: 1px solid var(--border);
+      transition: all 0.4s var(--ease);
+    }
+    .testimonial-card:hover {
+      border-color: var(--gold); box-shadow: var(--shadow-gold);
+      transform: translateY(-4px);
+    }
+    .testimonial-img {
+      width: 90px; height: 90px; border-radius: var(--radius-circle);
+      object-fit: cover; border: 4px solid var(--gold);
+      margin: 0 auto 1.5rem; box-shadow: 0 0 30px var(--gold-glow);
+      transition: transform 0.4s;
+    }
+    .testimonial-card:hover .testimonial-img { transform: scale(1.08) rotate(3deg); }
+    .testimonial-text {
+      font-style: italic; font-size: 1.15rem; margin-bottom: 1.8rem;
+      line-height: 1.8; color: var(--text);
+    }
+    .testimonial-name {
+      font-weight: 600; color: var(--gold); font-size: 1.1rem;
+    }
+    .testimonial-role {
+      font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;
+    }
+    .slider-dots {
+      display: flex; justify-content: center; gap: 0.9rem;
+      margin-top: 2rem;
+    }
+    .dot {
+      width: 12px; height: 12px; border-radius: var(--radius-circle);
+      background: var(--text-muted); cursor: pointer;
+      transition: all 0.35s var(--ease); border: 2px solid transparent;
+    }
+    .dot:hover { transform: scale(1.3); }
+    .dot.active {
+      background: var(--gold); transform: scale(1.4);
+      border-color: #0a0a0c; box-shadow: 0 0 20px var(--gold-glow);
+    }
+
+    /* ===== Reservation Form ===== */
+    .form-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+    }
+    .form-group { position: relative; }
+    .form-input {
+      width: 100%; padding: 1.1rem 1rem;
+      background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: 12px; color: var(--text); font-size: 1rem;
+      transition: all 0.35s var(--ease);
+    }
+    .form-input:focus {
+      border-color: var(--gold); outline: none;
+      box-shadow: 0 0 0 4px rgba(201, 162, 39, 0.15), 0 0 25px var(--gold-glow);
+      background: var(--bg-glass-hover);
+    }
+    .form-label {
+      position: absolute; left: 1rem; top: 1.1rem;
+      color: var(--text-muted); transition: all 0.35s var(--ease);
+      pointer-events: none; background: transparent; padding: 0 0.3rem;
+      font-size: 1rem;
+    }
+    .form-input:focus ~ .form-label,
+    .form-input:not(:placeholder-shown) ~ .form-label {
+      top: -0.7rem; left: 0.8rem; font-size: 0.8rem;
+      color: var(--gold); font-weight: 500;
+      background: var(--bg); padding: 0 0.5rem;
+    }
+    .form-input.error {
+      border-color: #e74c3c; box-shadow: 0 0 0 3px rgba(231,76,60,0.15);
+    }
+    .error-message {
+      font-size: 0.8rem; color: #e74c3c; margin-top: 0.4rem;
+      min-height: 1.2em;
+    }
+    .form-submit {
+      width: 100%; margin-top: 0.5rem; justify-content: center;
+    }
+    .form-status {
+      text-align: center; margin-top: 1.2rem; min-height: 1.6em;
+      font-weight: 500;
+    }
+    .form-status.success { color: #2ecc71; }
+    .form-status.error { color: #e74c3c; }
+
+    /* ===== Footer ===== */
+    footer {
+      background: var(--bg-surface); padding: 5rem 0 2.5rem;
+      border-top: 1px solid var(--border); position: relative;
+    }
+    footer::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 3.5rem; margin-bottom: 3.5rem;
+    }
+    .footer-brand .footer-logo {
+      font-size: 2rem; margin-bottom: 1.2rem; display: inline-flex;
+      align-items: center; gap: 0.6rem; text-decoration: none;
+    }
+    .footer-logo-circle {
+      width: 42px; height: 42px; border-radius: var(--radius-circle);
+      background: #000; border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .footer-logo-circle span {
+      font-family: var(--font-heading); font-size: 1.2rem;
+      font-weight: 700; color: var(--gold);
+    }
+    .footer-brand p {
+      color: var(--text-muted); margin-bottom: 1.8rem; line-height: 1.8;
+    }
+    .social-links { display: flex; gap: 1rem; }
+    .social-link {
+      width: 44px; height: 44px; border-radius: var(--radius-circle);
+      background: var(--bg-surface); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); transition: all 0.4s var(--ease);
+      text-decoration: none; position: relative; overflow: hidden;
+    }
+    .social-link::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--gold); opacity: 0; transition: opacity 0.35s;
+    }
+    .social-link:hover {
+      color: #0a0a0c; transform: translateY(-5px);
+      border-color: var(--gold); box-shadow: 0 8px 25px var(--gold-glow);
+    }
+    .social-link:hover::before { opacity: 1; }
+    .social-link i { position: relative; z-index: 1; font-size: 1.1rem; }
+    
+    .footer-heading {
+      font-size: 1.1rem; font-weight: 600; color: var(--text);
+      margin-bottom: 1.5rem; position: relative; padding-bottom: 0.8rem;
+    }
+    .footer-heading::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 40px; height: 2px; background: var(--gold);
+      border-radius: 2px;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li { margin-bottom: 0.9rem; }
+    .footer-links a {
+      color: var(--text-muted); text-decoration: none;
+      transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .footer-links a:hover {
+      color: var(--gold); padding-left: 6px;
+    }
+    .footer-links i { color: var(--gold); font-size: 0.9rem; }
+    
+    .footer-contact p {
+      display: flex; align-items: center; gap: 0.7rem;
+      margin-bottom: 0.9rem; color: var(--text-muted);
+    }
+    .footer-contact i { color: var(--gold); width: 20px; }
+    .footer-contact a {
+      color: var(--text); text-decoration: none; transition: color 0.3s;
+    }
+    .footer-contact a:hover { color: var(--gold); }
+    
+    .footer-bottom {
+      text-align: center; padding-top: 2.5rem;
+      border-top: 1px solid var(--border); color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+    .footer-bottom .developer {
+      color: var(--gold); font-weight: 500; margin-left: 0.3rem;
+    }
+
+    /* ===== Floating Reserve Button ===== */
+    .float-reserve {
+      position: fixed; bottom: 2.2rem; right: 2.2rem;
+      background: var(--gold); color: #0a0a0c;
+      width: 64px; height: 64px; border-radius: var(--radius-circle);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px var(--gold-glow);
+      cursor: pointer; z-index: 900; transition: all 0.4s var(--ease-spring);
+      animation: pulseFloat 2.5s infinite;
+      border: 3px solid #0a0a0c;
+    }
+    .float-reserve:hover {
+      transform: scale(1.15) rotate(8deg);
+      box-shadow: 0 12px 45px var(--gold-glow), 0 0 35px rgba(201,162,39,0.5);
+      background: var(--gold-light);
+    }
+    .float-reserve i { font-size: 1.5rem; position: relative; z-index: 1; }
+    @keyframes pulseFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.05); }
+    }
+
+    /* ===== Preloader ===== */
+    .preloader {
+      position: fixed; inset: 0; background: var(--bg);
+      z-index: 99999; display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.6s var(--ease), visibility 0.6s;
+    }
+    .preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader {
+      width: 60px; height: 60px; border: 4px solid var(--border);
+      border-top-color: var(--gold); border-radius: var(--radius-circle);
+      animation: spin 1.2s linear infinite;
+      box-shadow: 0 0 30px var(--gold-glow);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loader::after {
+      content: ''; position: absolute; inset: -6px;
+      border: 3px solid transparent; border-top-color: var(--gold-light);
+      border-radius: var(--radius-circle); animation: spin 2s linear infinite reverse;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 992px) {
+      .about-grid { grid-template-columns: 1fr; text-align: center; }
+      .chef-card { justify-content: center; }
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed; top: 0; right: -100%; width: 75%; height: 100vh;
+        background: var(--bg-glass); backdrop-filter: blur(28px);
+        flex-direction: column; padding: 6rem 2.5rem; gap: 1.8rem;
+        transition: right 0.5s var(--ease);
+      }
+      .nav-links.active { right: 0; }
+      .hamburger { display: block; }
+      .hero h1 { font-size: 2.8rem; }
+      .hero p { font-size: 1.05rem; }
+      .float-reserve { bottom: 1.8rem; right: 1.8rem; width: 56px; height: 56px; }
+      .footer-grid { grid-template-columns: 1fr; text-align: center; }
+      .footer-contact p { justify-content: center; }
+      .social-links { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: 2.4rem; }
+      h2 { font-size: 1.9rem; }
+      .btn { padding: 0.8rem 1.8rem; font-size: 0.95rem; }
+      .menu-filters { gap: 0.4rem; }
+      .filter-btn { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+    }
+
+    /* ===== Reduced Motion ===== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal, .reveal-left, .reveal-right, .reveal-scale {
+        opacity: 1 !important; transform: none !important;
+      }
+    }
+
+    /* ===== Mouse Glow Effect ===== */
+    .glow-on-hover {
+      position: relative; overflow: hidden;
+    }
+    .glow-on-hover::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(201, 162, 39, 0.15), transparent 40%);
+      opacity: 0; transition: opacity 0.4s; pointer-events: none;
+      z-index: 1;
+    }
+    .glow-on-hover:hover::before { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- Preloader -->
+  <div id="preloader" class="preloader" aria-label="Loading">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Scroll Progress -->
+  <div id="scrollProgress"></div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button id="lbClose" class="lightbox-close" aria-label="Close"><i class="fas fa-times"></i></button>
+    <img id="lbImg" src="" alt="Gallery Image">
+  </div>
+
+  <!-- Floating Reserve Button -->
+  <a href="#reservation" class="float-reserve" aria-label="Reserve Table">
+    <i class="fas fa-calendar-check"></i>
+  </a>
+
+  <!-- Navbar -->
+  <nav id="navbar" class="navbar">
+    <a href="#" class="logo">
+      <div class="logo-circle"><span>AH</span></div>
+      <span class="logo-text">The <span>Cafeteria</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#menu" class="nav-link">Menu</a></li>
+      <li><a href="#gallery" class="nav-link">Gallery</a></li>
+      <li><a href="#testimonials" class="nav-link">Reviews</a></li>
+      <li><a href="#reservation" class="nav-link">Reservation</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="themeToggle" class="theme-toggle" aria-label="Toggle Theme">
+        <i class="fas fa-sun"></i>
+      </button>
+      <button id="hamburger" class="hamburger" aria-label="Toggle Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header id="hero" class="hero">
+    <div class="hero-content">
+      <span class="hero-tag"><i class="fas fa-utensils"></i> Est. 2024 • Kabul</span>
+      <h1>Where Culinary Art <br><span class="text-gradient">Meets Elegance</span></h1>
+      <p>Experience extraordinary flavors crafted with passion, served in an ambiance that transforms dinner into an unforgettable memory.</p>
+      <div class="hero-actions">
+        <a href="#menu" class="btn btn-lg"><i class="fas fa-book-open"></i> View Menu</a>
+        <a href="#reservation" class="btn btn-lg btn-outline"><i class="fas fa-calendar-alt"></i> Book a Table</a>
+      </div>
+    </div>
+    <a href="#about" class="scroll-down" aria-label="Scroll Down"><i class="fas fa-chevron-down"></i></a>
+  </header>
+
+  <!-- Stats -->
+  <section class="stats">
+    <div class="container grid-4">
+      <div class="stat-item reveal"><span class="stat-number" data-target="12">0</span><span class="stat-label">Master Chefs</span></div>
+      <div class="stat-item reveal"><span class="stat-number" data-target="48">0</span><span class="stat-label">Signature Dishes</span></div>
+      <div class="stat-item reveal"><span class="stat-number" data-target="8">0</span><span class="stat-label">Years of Excellence</span></div>
+      <div class="stat-item reveal"><span class="stat-number" data-target="2500">0</span><span class="stat-label">Happy Guests</span></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="text-center reveal"><h2>Our <span class="text-gradient">Story</span></h2><div class="gold-line"></div></div>
+      <div class="about-grid">
+        
+        <div class="about-content reveal-right">
+          <h3>A Legacy of Flavor</h3>
+          <p>Founded in 2024, The Cafeteria began as a dream to blend traditional Afghan hospitality with modern culinary innovation. Our kitchen is led by Executive Chef Asadullah Hameedi, whose passion for clean, efficient code translates into precise, artful cuisine.</p>
+          <p>We source locally, cook with passion, and serve with grace. Every ingredient tells a story, every dish is a conversation, and every visit leaves a lasting impression.</p>
+          <div class="chef-card">
+            <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=150&q=80" alt="Chef" class="chef-img">
+            <div class="chef-info">
+              <h4>Asadullah Hameedi</h4>
+              <p>Executive Chef & Founder</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section id="menu" style="background: var(--bg-surface);">
+    <div class="container">
+      <div class="text-center reveal"><h2>Curated <span class="text-gradient">Menu</span></h2><div class="gold-line"></div></div>
+      <div class="menu-filters reveal">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="starters">Starters</button>
+        <button class="filter-btn" data-filter="mains">Mains</button>
+        <button class="filter-btn" data-filter="desserts">Desserts</button>
+      </div>
+      <div class="grid grid-3" id="menuGrid"></div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <div class="container">
+      <div class="text-center reveal"><h2>Visual <span class="text-gradient">Journey</span></h2><div class="gold-line"></div></div>
+      <div class="gallery-grid reveal">
+        <div class="gallery-item glow-on-hover">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80" alt="Signature Dish" loading="lazy">
+          <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+        </div>
+        <div class="gallery-item glow-on-hover">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=600&q=80" alt="Ambiance" loading="lazy">
+          <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+        </div>
+        <div class="gallery-item glow-on-hover">
+          <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80" alt="Dessert" loading="lazy">
+          <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+        </div>
+        <div class="gallery-item glow-on-hover">
+          <img src="https://images.unsplash.com/photo-1514326640560-7d063ef2aed5?auto=format&fit=crop&w=600&q=80" alt="Wine Pairing" loading="lazy">
+          <div class="gallery-overlay"><i class="fas fa-search-plus"></i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" style="background: var(--bg-surface);">
+    <div class="container">
+      <div class="text-center reveal"><h2>Guest <span class="text-gradient">Reviews</span></h2><div class="gold-line"></div></div>
+      <div class="testimonial-slider reveal">
+        <div class="testimonial-track" id="tTrack">
+          <div class="testimonial-card">
+            <img src="https://images.unsplash.com/photo-1534528741755-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Client" class="testimonial-img" loading="lazy">
+            <p class="testimonial-text">"An absolutely unforgettable dining experience. The ambiance, the service, and the flavors were perfectly orchestrated. A must-visit in Kabul."</p>
+            <p class="testimonial-name">Fatima Hamdard</p>
+            <p class="testimonial-role">Food Critic</p>
+          </div>
+          <div class="testimonial-card">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="Client" class="testimonial-img" loading="lazy">
+            <p class="testimonial-text">"Chef Asadullah's tasting menu was a journey through culinary excellence. Every course told a story. Impeccable from start to finish."</p>
+            <p class="testimonial-name">Ali Kamalzoi</p>
+            <p class="testimonial-role">Business Executive</p>
+          </div>
+          <div class="testimonial-card">
+            <img src="images.unsplash.com/photo-1506794778205-cad84cf45f1d?auto=format&fit=crop&w=100&q=80" alt="Client" class="testimonial-img" loading="lazy">
+            <p class="testimonial-text">"The perfect spot for our anniversary. The private dining, the wine pairing, and the attentive staff made it truly special."</p>
+            <p class="testimonial-name">Habib Shah</p>
+            <p class="testimonial-role">Regular Guest</p>
+          </div>
+        </div>
+        <div class="slider-dots" id="tDots"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reservation -->
+  <section id="reservation">
+    <div class="container">
+      <div class="text-center reveal"><h2>Reserve Your <span class="text-gradient">Table</span></h2><div class="gold-line"></div></div>
+      <div style="max-width: 750px; margin: 2.5rem auto 0;" class="reveal">
+        <form id="resForm" class="form-grid" novalidate>
+          <div class="form-group">
+            <input type="text" id="name" class="form-input" placeholder=" " required>
+            <label for="name" class="form-label">Full Name</label>
+            <div class="error-message"></div>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" class="form-input" placeholder=" " required>
+            <label for="email" class="form-label">Email Address</label>
+            <div class="error-message"></div>
+          </div>
+          <div class="form-group">
+            <input type="tel" id="phone" class="form-input" placeholder=" " required>
+            <label for="phone" class="form-label">Phone Number</label>
+            <div class="error-message"></div>
+          </div>
+          <div class="form-group">
+            <input type="date" id="date" class="form-input" placeholder=" " required>
+            <label for="date" class="form-label" style="top:-0.7rem; font-size:0.8rem; color:var(--gold);">Date</label>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1;">
+            <textarea id="message" class="form-input" rows="3" placeholder=" " style="min-height: 110px; resize: vertical;"></textarea>
+            <label for="message" class="form-label">Special Requests</label>
+            <div class="error-message"></div>
+          </div>
+          <button type="submit" class="btn btn-lg form-submit"><i class="fas fa-paper-plane"></i> Confirm Reservation</button>
+          <div id="formStatus" class="form-status" style="grid-column: 1 / -1;"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="footer-logo">
+            <div class="footer-logo-circle"><span>AH</span></div>
+            <span>The <span class="text-gold">Cafeteria</span></span>
+          </a>
+          <p>Where every meal is a masterpiece. Experience culinary excellence in an atmosphere of refined elegance, crafted with passion by Asadullah Hameedi.</p>
+          <div class="social-links">
+            <a href="https://github.com/asadullahhameeedi/" target="_blank" class="social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://x.com/AsadullahHzmd" target="_blank" class="social-link" aria-label="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/asadullah-hameedi-180530411/" target="_blank" class="social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-heading">Hours</h4>
+          <ul class="footer-links">
+            <li><i class="fas fa-clock"></i> <strong>Mon - Thu:</strong> 5:00 PM - 10:00 PM</li>
+            <li><i class="fas fa-clock"></i> <strong>Fri - Sat:</strong> 5:00 PM - 11:00 PM</li>
+            <li><i class="fas fa-clock"></i> <strong>Sunday:</strong> 4:00 PM - 9:00 PM</li>
+            <li><i class="fas fa-star text-gold"></i> <strong>Holidays:</strong> Special Hours</li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4 class="footer-heading">Contact</h4>
+          <p><i class="fas fa-map-marker-alt"></i> Kabul, Afghanistan</p>
+          <p><i class="fas fa-phone"></i> <a href="tel:+93798601010">+93 (0) 798 60 10 10</a></p>
+          <p><i class="fab fa-whatsapp"></i> <a href="https://wa.me/93700310963">+93 (0) 700 310 963</a></p>
+          <p><i class="fas fa-envelope"></i> <a href="mailto:asadullah.hameedi512@gmail.com">asadullah.hameedi512@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> The Cafeteria | Developed by <span class="developer">Asadullah Hameedi</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ========================================
+       THE CAFETERIA - INTERACTIVE JS ENGINE
+       Developed by Asadullah Hameedi
+       ======================================== */
+    const $ = (s, p = document) => p.querySelector(s);
+    const $$ = (s, p = document) => Array.from(p.querySelectorAll(s));
+
+    // ===== Preloader =====
+    window.addEventListener('load', () => {
+      setTimeout(() => $('#preloader').classList.add('hidden'), 600);
+    });
+
+    // ===== Scroll Progress =====
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight;
+      const p = h > 0 ? (window.scrollY / h) * 100 : 0;
+      $('#scrollProgress').style.width = `${Math.min(p, 100)}%`;
+    });
+
+    // ===== Navbar & Theme Toggle =====
+    const navbar = $('#navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    const themeBtn = $('#themeToggle');
+    const applyTheme = t => {
+      document.documentElement.setAttribute('data-theme', t);
+      themeBtn.innerHTML = t === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+      localStorage.setItem('cafeteria-theme', t);
+    };
+    applyTheme(localStorage.getItem('cafeteria-theme') || 'dark');
+    themeBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // ===== Mobile Navigation =====
+    const hamburger = $('#hamburger');
+    const navLinks = $('.nav-links');
+    hamburger.addEventListener('click', () => {
+      const active = navLinks.classList.toggle('active');
+      hamburger.innerHTML = active ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+      hamburger.setAttribute('aria-expanded', active);
+      document.body.style.overflow = active ? 'hidden' : '';
+    });
+    $$('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+        hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ===== Reveal on Scroll =====
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+    $$('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => revealObserver.observe(el));
+
+    // ===== Animated Stats Counter =====
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = +el.dataset.target;
+        const duration = 1800;
+        const start = performance.now();
+        
+        const animate = (now) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3); // Ease-out cubic
+          const value = Math.floor(ease * target);
+          el.textContent = target >= 100 ? `${value}+` : value;
+          if (progress < 1) requestAnimationFrame(animate);
+        };
+        requestAnimationFrame(animate);
+        statsObserver.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    $$('.stat-number').forEach(num => statsObserver.observe(num));
+
+    // ===== Menu Data & Filtering =====
+    const menuData = [
+      { id: 1, cat: 'starters', img: 'https://images.unsplash.com/photo-1626645738196-c8a9a3c01c8c?auto=format&fit=crop&w=500&q=80', title: 'Truffle Burrata', desc: 'Creamy burrata with black truffle, heirloom tomatoes & basil oil.', price: '$18', tags: ['Vegetarian', 'GF'] },
+      { id: 2, cat: 'starters', img: 'https://images.unsplash.com/photo-1541014741259-de529411b96a?auto=format&fit=crop&w=500&q=80', title: 'Seared Tuna Tartare', desc: 'Sushi-grade tuna, avocado mousse, sesame, citrus ponzu.', price: '$22', tags: ['Chef\'s Pick'] },
+      { id: 3, cat: 'mains', img: 'https://images.unsplash.com/photo-1544025162-d76690b60944?auto=format&fit=crop&w=500&q=80', title: 'Wagyu Ribeye A5', desc: 'Japanese wagyu, smoked bone marrow, red wine reduction, truffle fries.', price: '$68', tags: ['Premium'] },
+      { id: 4, cat: 'mains', img: 'https://images.unsplash.com/photo-1432139509613-5c4255815697?auto=format&fit=crop&w=500&q=80', title: 'Pan-Seared Sea Bass', desc: 'Crispy skin sea bass, saffron risotto, charred lemon butter.', price: '$42', tags: ['GF'] },
+      { id: 5, cat: 'desserts', img: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=500&q=80', title: 'Dark Chocolate Fondant', desc: 'Molten center, vanilla bean ice cream, salted caramel drizzle.', price: '$14', tags: ['Vegetarian'] },
+      { id: 6, cat: 'desserts', img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=500&q=80', title: 'Yuzu Lemon Tart', desc: 'Citrus curd, torched meringue, almond crumble base.', price: '$12', tags: ['Light'] }
+    ];
+
+    const renderMenu = filter => {
+      const grid = $('#menuGrid');
+      grid.innerHTML = menuData
+        .filter(m => filter === 'all' || m.cat === filter)
+        .map(m => `
+          <article class="menu-card reveal active glow-on-hover">
+            <div class="menu-img"><img src="${m.img}" alt="${m.title}" loading="lazy"></div>
+            <div class="menu-info">
+              <div class="menu-header"><h3 class="menu-title">${m.title}</h3><span class="menu-price">${m.price}</span></div>
+              <p class="menu-desc">${m.desc}</p>
+              <div class="menu-tags">${m.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+            </div>
+          </article>
+        `).join('');
+      // Re-observe new cards for reveal animation
+      $$('.menu-card', grid).forEach(card => revealObserver.observe(card));
+    };
+    renderMenu('all');
+    $$('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        $$('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderMenu(btn.dataset.filter);
+      });
+    });
+
+    // ===== Gallery Lightbox =====
+    const lb = $('#lightbox'), lbImg = $('#lbImg');
+    $$('.gallery-item').forEach(item => {
+      item.addEventListener('click', () => {
+        lbImg.src = item.querySelector('img').src.replace('w=600', 'w=1400');
+        lb.classList.add('active');
+        lb.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    const closeLightbox = () => {
+      lb.classList.remove('active');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+    $('#lbClose').addEventListener('click', closeLightbox);
+    lb.addEventListener('click', (e) => { if(e.target === lb) closeLightbox(); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && lb.classList.contains('active')) closeLightbox(); });
+
+    // ===== Testimonial Slider =====
+    const track = $('#tTrack');
+    const dotsC = $('#tDots');
+    const slides = $$('.testimonial-card');
+    let curr = 0, autoSlide;
+
+    const createDots = () => {
+      dotsC.innerHTML = '';
+      slides.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = `dot ${i === 0 ? 'active' : ''}`;
+        d.setAttribute('role', 'button');
+        d.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        d.addEventListener('click', () => goTo(i));
+        dotsC.appendChild(d);
+      });
+    };
+    createDots();
+
+    const goTo = idx => {
+      curr = idx;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      $$('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    };
+
+    const startAutoSlide = () => {
+      autoSlide = setInterval(() => goTo((curr + 1) % slides.length), 6000);
+    };
+    const stopAutoSlide = () => clearInterval(autoSlide);
+    
+    $('.testimonial-slider').addEventListener('mouseenter', stopAutoSlide);
+    $('.testimonial-slider').addEventListener('mouseleave', startAutoSlide);
+    startAutoSlide();
+
+    // ===== Reservation Form Validation & Submission =====
+    const form = $('#resForm'), status = $('#formStatus');
+    
+    const validateField = (field) => {
+      const value = field.value.trim();
+      const errorEl = field.closest('.form-group')?.querySelector('.error-message');
+      
+      if (field.id === 'name' && value.length < 2) {
+        field.classList.add('error');
+        if(errorEl) errorEl.textContent = 'Please enter your full name';
+        return false;
+      }
+      if (field.id === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        field.classList.add('error');
+        if(errorEl) errorEl.textContent = 'Please enter a valid email';
+        return false;
+      }
+      if (field.id === 'phone' && !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/.test(value)) {
+        field.classList.add('error');
+        if(errorEl) errorEl.textContent = 'Please enter a valid phone number';
+        return false;
+      }
+      
+      field.classList.remove('error');
+      if(errorEl) errorEl.textContent = '';
+      return true;
+    };
+
+    $$('#resForm .form-input').forEach(input => {
+      input.addEventListener('blur', () => validateField(input));
+      input.addEventListener('input', () => {
+        if(input.classList.contains('error')) validateField(input);
+      });
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Validate all fields
+      const fields = ['name', 'email', 'phone'].map(id => $(`#${id}`));
+      const allValid = fields.every(f => validateField(f));
+      
+      if(!allValid) {
+        status.textContent = 'Please correct the errors above.';
+        status.className = 'form-status error';
+        return;
+      }
+      
+      const btn = form.querySelector('button[type="submit"]');
+      const origHTML = btn.innerHTML;
+      
+      // Show loading state
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+      status.textContent = '';
+      status.className = 'form-status';
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Success state
+      status.textContent = '✓ Reservation confirmed! We\'ll email you a receipt shortly.';
+      status.className = 'form-status success';
+      btn.innerHTML = '<i class="fas fa-check"></i> Booked!';
+      btn.style.background = '#2ecc71';
+      btn.style.borderColor = '#2ecc71';
+      
+      form.reset();
+      
+      // Reset button after delay
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = origHTML;
+        btn.style.background = '';
+        btn.style.borderColor = '';
+      }, 4500);
+    });
+
+    // ===== Mouse Glow Effect =====
+    document.addEventListener('mousemove', (e) => {
+      $$('.glow-on-hover').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        el.style.setProperty('--mouse-x', `${x}px`);
+        el.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+
+    // ===== Footer Year =====
+    $('#year').textContent = new Date().getFullYear();
+
+    // ===== Smooth Scroll for Anchor Links =====
+    $$('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if(href === '#') return;
+        const target = $(href);
+        if(target) {
+          e.preventDefault();
+          const offset = navbar.offsetHeight;
+          const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
